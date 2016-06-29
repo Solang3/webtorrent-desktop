@@ -152,13 +152,16 @@ function updateElectron () {
   }
 }
 
+function getOpenInVlc () {
+  return state.saved.prefs.playInVlc
+}
+
 // Events from the UI never modify state directly. Instead they call dispatch()
 function dispatch (action, ...args) {
   // Log dispatch calls, for debugging
   if (!['mediaMouseMoved', 'mediaTimeUpdate'].includes(action)) {
     console.log('dispatch: %s %o', action, args)
   }
-
   if (action === 'onOpen') {
     onOpen(args[0] /* files */)
   }
@@ -1066,6 +1069,14 @@ function openPlayerFromActiveTorrent (torrentSummary, index, timeout, cb) {
     if (timedOut) {
       ipcRenderer.send('wt-stop-server')
       return update()
+    }
+
+    // play in VLC if set as default player (Preferences / Playback / Play in VLC)
+    if (getOpenInVlc()) {
+      dispatch('vlcPlay')
+      update()
+      cb()
+      return
     }
 
     // otherwise, play the video

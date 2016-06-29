@@ -10,6 +10,7 @@ function Preferences (state) {
   return hx`
     <div class='preferences'>
       ${renderGeneralSection(state)},
+      ${renderPlaybackSection(state)},
       ${renderSubtitlesSection(state)}
     </div>
   `
@@ -62,6 +63,29 @@ function renderSubtitlesLanguageSelector (state) {
   state.unsaved.prefs.subtitlesLanguage,
   function (value) {
     setStateValue('subtitlesLanguage', value)
+  })
+}
+
+function renderPlaybackSection (state) {
+  return renderSection({
+    title: 'Playback',
+    description: '',
+    icon: 'settings'
+  }, [
+    renderPlayInVlcSelector(state)
+  ])
+}
+
+function renderPlayInVlcSelector (state) {
+  return renderCheckbox({
+    label: 'Play in VLC',
+    description: 'Media will play in VLC',
+    property: 'playInVlc',
+    value: state.saved.prefs.playInVlc
+  },
+  state.unsaved.prefs.playInVlc,
+  function (value) {
+    setStateValue('playInVlc', value)
   })
 }
 
