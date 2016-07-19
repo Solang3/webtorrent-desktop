@@ -10,6 +10,9 @@ var fs = require('fs')
 function downloadSubtitles (params) {
   console.log('--- OPEN SUBTITLES: downloadSubtitles:', params)
 
+  // set default language
+  params.lang = params.lang || 'spa'
+
   var total = 0
 
   getSubtitles(params)
