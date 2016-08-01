@@ -10,6 +10,7 @@ module.exports = class Preferences extends React.Component {
     return (
       <div className='preferences'>
         {renderGeneralSection(state)}
+        {renderPlaybackSection(state)}
         {renderChannelsSection(state)}
       </div>
     )
@@ -49,11 +50,7 @@ function renderAddChannelInput (state) {
   state.temp_addChannel || '',
   function (channelUrl) {
     if (!channelUrl || !channelUrl.trim()) return
-    // var channels = state.saved.prefs.channels || []
-
     dispatch('addChannel', channelUrl)
-    // channels.push(channelUrl)
-    // setStateValue('channels', channels)
   })
 
   function onValueChange(value) {
@@ -223,6 +220,29 @@ function renderInput (definition, value, callback) {
   }
 }
 
+function renderPlaybackSection (state) {
+  return renderSection({
+    title: 'Playback',
+    description: '',
+    icon: 'settings'
+  }, [
+    renderPlayInVlcSelector(state)
+  ])
+}
+
+function renderPlayInVlcSelector (state) {
+  return renderCheckbox({
+    label: 'Play in VLC',
+    description: 'Media will play in VLC',
+    property: 'playInVlc',
+    value: state.saved.prefs.playInVlc
+  },
+  state.unsaved.prefs.playInVlc,
+  function (value) {
+    setStateValue('playInVlc', value)
+  })
+}
+
 function renderDownloadDirSelector (state) {
   return renderFileSelector({
     key: 'download-path',
@@ -262,6 +282,35 @@ function renderSection (definition, controls) {
       </div>
     </section>
   )
+}
+
+function renderCheckbox (definition, value, callback) {
+  var iconClass = 'icon clickable'
+  if (value) iconClass += ' enabled'
+
+  return (
+    <div className='control-group'>
+      <div className='controls'>
+        <label className='control-label'>
+          <div className='preference-title'>{definition.label}</div>
+        </label>
+        <div className='controls'>
+          <label className='clickable' onClick={handleClick}>
+            <i
+              className={iconClass}
+              id='{definition.property}'
+            >
+              check_circle
+            </i>
+            <span className='checkbox-label'>{definition.description}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  )
+  function handleClick () {
+    callback(!value)
+  }
 }
 
 // Creates a file chooser
