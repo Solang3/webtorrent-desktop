@@ -285,26 +285,29 @@ function renderSection (definition, controls) {
 }
 
 function renderCheckbox (definition, value, callback) {
-  var iconClass = 'icon clickable'
-  if (value) iconClass += ' enabled'
+  var btnClass = 'btn btn-disabled'
+  if (value) btnClass = 'btn btn-enabled'
 
   return (
     <div className='control-group'>
-      <div className='controls'>
+      <div className='controls pb-sm'>
         <label className='control-label'>
           <div className='preference-title'>{definition.label}</div>
         </label>
-        <div className='controls'>
-          <label className='clickable' onClick={handleClick}>
-            <i
-              className={iconClass}
-              id='{definition.property}'
-            >
+      </div>
+
+      <div className='controls'>
+        <label className='clickable' onClick={handleClick}>
+          <button className={btnClass}>
+            <i className='icon' id='{definition.property}'>
               check_circle
             </i>
-            <span className='checkbox-label'>{definition.description}</span>
+          </button>
+          
+          <label className='control-label'>
+            <span className='preference-description' title='{item.description}'>{definition.description}</span>
           </label>
-        </div>
+        </label>
       </div>
     </div>
   )
