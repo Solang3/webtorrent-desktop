@@ -1,4 +1,3 @@
-const State = require('../lib/state')
 const {dispatch} = require('../lib/dispatcher')
 
 // Controls the Channel List screen

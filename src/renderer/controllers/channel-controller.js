@@ -1,6 +1,4 @@
-const electron = require('electron')
-const {dispatch} = require('../lib/dispatcher')
-const request = require('request');
+const request = require('request')
 
 module.exports = class ChannelController {
   constructor (state) {
@@ -18,46 +16,8 @@ module.exports = class ChannelController {
   }
 
   getChannels () {
-    return this.state.saved.prefs.channels || {}
+    return this.state.saved.prefs.channels || {}
   }
-
-  // updateChannel (channelIndex, successCallback, errorCallback) {
-  //   var channels = this.state.saved.prefs.channels
-  //   if (!channels[channelIndex]) {
-  //     return []
-  // 	}
-
-  //   var channel = channels[channelIndex]
-  //   var torrents = []
-
-  //   request
-  //     .get(channel.url)
-  //     .on('response', onResponse)
-
-  //   function onResponse (response) {
-  //     response.channel = channel
-  //     if (response.statusCode === 200) return successCallback(response)
-  //     return errorCallback(response)
-  //   }
-  // }
-
-  // getTorrentsFromEnabledChannels () {
-  //   var enabledChannels = this.getEnabledChannels()
-  //   var channels = this.state.saved.prefs.channels
-  //   var torrents = []
-  //   var that = this
-
-  //   console.log('--- enabledChannels:', enabledChannels)
-  //   console.log('--- channels:', channels)
-  //   enabledChannels.forEach(function (channelIndex) {
-  //     var channel = channels[channelIndex]
-  //     torrents = torrents.concat(channel.torrents)
-  //     console.log(`--- current CHANNEL for index ${channelIndex}:`, channel)
-  //     console.log('--- channel TORRENTS:', channel.torrents)
-  //   })
-
-  //   return torrents
-  // }
 
   getEnabledChannels () {
     return this.state.saved.prefs.enabledChannels || {}
@@ -65,7 +25,7 @@ module.exports = class ChannelController {
 
   /**
    * Makes GET request to get channel data.
-   * 
+   *
    * @param  {string} channelUrl
    * @param {function} callback
    */
@@ -106,7 +66,7 @@ module.exports = class ChannelController {
     function onGetChannelOk (response) {
       response.url = channelUrl
       console.log('--- onGetChannelOk:', response)
-      that.state.unsaved.prefs.channels = that.state.unsaved.prefs.channels || {}
+      that.state.unsaved.prefs.channels = that.state.unsaved.prefs.channels || {}
       that.state.unsaved.prefs.channels[channelUrl] = response
     }
 

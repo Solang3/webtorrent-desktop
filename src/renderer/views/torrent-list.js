@@ -23,10 +23,14 @@ module.exports = class TorrentList extends React.Component {
     )
   }
 
+  isChannelMode () {
+    var state = this.props.state
+    return state.location.url() === 'channel-torrents'
+  }
+
   renderChannelsButton () {
     // don't render channels button when displaying channel torrents
-    var state = this.props.state
-    if (state.currentChannel) return
+    if (this.isChannelMode()) return
 
     return (
       <div key='channel-button' className='torrent torrent-menu-item' onClick={dispatcher('channels')}>
@@ -41,11 +45,15 @@ module.exports = class TorrentList extends React.Component {
     var isSelected = infoHash && state.selectedInfoHash === infoHash
 
     // if we are displaying a channel, only render those channel torrents
-    if (state.currentChannel && torrentSummary.channelUrl !== state.currentChannel.url) return
+    if (
+      this.isChannelMode() &&
+      state.currentChannel &&
+      torrentSummary.channelUrl !== state.currentChannel.url
+    ) return
 
     // if we're not displaying a channel do not display channel torrents
     // channel torrents have a channelUrl
-    if (!state.currentChannel && torrentSummary.channelUrl) return
+    if (!this.isChannelMode() && torrentSummary.channelUrl) return
 
     // Background image: show some nice visuals, like a frame from the movie, if possible
     var style = {}

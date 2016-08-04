@@ -7,7 +7,8 @@ const Views = {
   'player': require('./player'),
   'create-torrent': require('./create-torrent'),
   'preferences': require('./preferences'),
-  'channel-list': require('./channel-list')
+  'channel-list': require('./channel-list'),
+  'channel-torrents': require('./torrent-list')
 }
 
 const Modals = {

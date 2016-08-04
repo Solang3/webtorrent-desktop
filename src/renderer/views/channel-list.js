@@ -5,7 +5,7 @@ module.exports = class ChannelList extends React.Component {
 
   render () {
     this.state = this.props.state
-    this.state.currentChannel = null // reset torrents list
+    // this.state.currentChannel = null // reset torrents list
 
     var channels = this.state.saved.prefs.channels
     var channelRows = []
@@ -97,10 +97,10 @@ module.exports = class ChannelList extends React.Component {
 
   showTorrentList (channel) {
     this.state.location.go({
-      url: 'home',
+      url: 'channel-torrents',
       setup: function (cb) {
         // initialize preferences
-        var title = channel && channel.name || 'Torrents List'
+        var title = channel && channel.name || 'Torrents List'
         dispatch('setTitle', title)
         cb()
       }

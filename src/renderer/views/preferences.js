@@ -53,7 +53,7 @@ function renderAddChannelInput (state) {
     dispatch('addChannel', channelUrl)
   })
 
-  function onValueChange(value) {
+  function onValueChange (value) {
     // update value so it persists between view refreshes
     state.temp_addChannel = value
   }
@@ -71,9 +71,9 @@ function renderChannelsList (state) {
     ],
     conditionalButtons: [
       {
-        type: 'check_circle', 
-        property: 'enabled', 
-        enabledClick: disableChannel, 
+        type: 'check_circle',
+        property: 'enabled',
+        enabledClick: disableChannel,
         disabledClick: enableChannel
       }
     ],
@@ -81,7 +81,7 @@ function renderChannelsList (state) {
   })
 
   function isChannelEnabled (channel) {
-    var enabledChannels = state.saved.prefs.enabledChannels || {}
+    var enabledChannels = state.saved.prefs.enabledChannels || {}
     if (enabledChannels[channel.url]) return true
     return false
   }
@@ -116,7 +116,7 @@ function renderChannelsList (state) {
     if (!isChannelEnabled(channel)) {
       console.log('[disableChannel]: ALREADY DISABLED: channel:', channel)
       return // already disabled!
-    } 
+    }
 
     // update enabled channels
     var enabledChannels = state.saved.prefs.enabledChannels || {}
@@ -164,7 +164,7 @@ function renderButtonList (definition) {
                     </button>
                   )
                 }
-                
+
                 // disabled
                 return (
                   <button className='btn btn-disabled' index='{i}' onClick={() => button.disabledClick(item, i)}>
@@ -213,7 +213,7 @@ function renderInput (definition, value, callback) {
     callback(channel)
   }
 
-  function handleChange() {
+  function handleChange () {
     console.log('--- value changed', this)
     var channel = document.getElementById(definition.property).value
     definition.onValueChange(channel)
@@ -303,7 +303,7 @@ function renderCheckbox (definition, value, callback) {
               check_circle
             </i>
           </button>
-          
+
           <label className='control-label'>
             <span className='preference-description' title='{item.description}'>{definition.description}</span>
           </label>
